@@ -44,13 +44,13 @@ class CSVledger:
     def print_transaction(self, date, description, debit, credit):
         """ Prints the transaction in ledger format. """
         if debit:
-            print(f"{date} *  {description}")
+            print(f"{date} * {description}")
             print(
                 f"\t \t {self.categorize_transaction(description)} \t ${format(debit, '.2f')}"
             )
             print("\t \t Assets:Checking \n")
         elif credit:
-            print(f"{date} *  {description}")
+            print(f"{date} * {description}")
             print(f"\t \t Assets:Checking \t ${format(credit, '.2f')}")
             print(f"\t \t {self.categorize_transaction(description)} \n")
 
@@ -89,7 +89,10 @@ class CSVledger:
 @click.option(
     "--total", is_flag=True, help="prints sum of all credit and debit transactions",
 )
-def cli(csvfile, check, config, total):
+@click.option(
+    "--convert", is_flag=True, help="prints transactions in ledger format",
+)
+def cli(csvfile, check, config, total, convert):
     """ This script coverts CSV files downloaded from a financial instution to
     ledger entries.  Each entry is categorized using the business name to
     determine the spending category. """
@@ -130,7 +133,7 @@ def cli(csvfile, check, config, total):
                 if convertor.categorize_transaction(description) is None:
                     # No assocated Income/Expense category found
                     convertor.print_transaction(date, description, debit, credit)
-            else:
+            elif convert:
                 convertor.print_transaction(date, description, debit, credit)
         if total:
             convertor.print_total(total_credit, total_debit)
