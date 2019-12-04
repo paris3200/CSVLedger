@@ -15,28 +15,10 @@ class CSVledger:
     def filter_description(self, row):
         """ Removes extra data from the transaction description"""
         result = row
-        remove_text = [
-            "Point of Sale",
-            "L340",
-            "DATE",
-            "Debit",
-            "WINSTON-SALE",
-            "WINSTON SALE",
-            "WINSTON-SALNC",
-            "MOUNT AIRY",
-            "MT AIRY",
-            "KING",
-            "PINNACLE",
-            "SECU BILLPAY TO",
-            "ACH",
-            "HILLSVILLE",
-            "DOBSON",
-            "MOCKSVILLE",
-            "LEXINGTON",
-        ]
-        for text in remove_text:
+        for text in self.config.filter:
             result = result.replace(text, "")
 
+        # TODO Move this to the config
         # Remove the Transaction Date
         result = re.sub(r"\d\d[-]\d\d", "", result)
 
@@ -53,10 +35,11 @@ class CSVledger:
 
     def categorize_transaction(self, description):
         accounts = self.config.accounts
-        for account, vendors in accounts.items():
-            for vendor in vendors:
-                if vendor in description:
-                    return account
+        for group in accounts:
+            for account, vendors in group.items():
+                for vendor in vendors:
+                    if vendor in description:
+                        return account
 
     def print_transaction(self, date, description, debit, credit):
         """ Prints the transaction in ledger format. """
@@ -71,10 +54,16 @@ class CSVledger:
             print(f"\t \t Assets:Checking \t ${format(credit, '.2f')}")
             print(f"\t \t {self.categorize_transaction(description)} \n")
 
+    """
+    Prints the combined total of all credit and debit transactions
+
+    :param total_credit: sum total of credit transactions
+    :param total_debit: sum total of debit transactions
+    """
+
     def print_total(self, total_credit, total_debit):
-        """ Prints the combined total of all credit and debit transactions. """
-        print(f"Credit: +{format(total_credit, '.2f')}")
-        print(f"Debit: -{format(total_debit, '.2f')}")
+        print(f"Credit: +${format(total_credit, '.2f')}")
+        print(f"Debit: -${format(total_debit, '.2f')}")
 
     # TODO allow for initial date format to be specified
     def format_date(self, date):
@@ -83,6 +72,9 @@ class CSVledger:
 
 
 @click.command()
+@click.option(
+    "--config", type=click.Path(exists=True, readable=True), help="path to config file",
+)
 @click.option(
     "--csvfile",
     "-i",
@@ -95,9 +87,9 @@ class CSVledger:
     help="prints all transaction without an expense/income category.",
 )
 @click.option(
-    "--config", type=click.Path(exists=True, readable=True), help="path to config file",
+    "--total", is_flag=True, help="prints sum of all credit and debit transactions",
 )
-def cli(csvfile, check, config):
+def cli(csvfile, check, config, total):
     """ This script coverts CSV files downloaded from a financial instution to
     ledger entries.  Each entry is categorized using the business name to
     determine the spending category. """
@@ -140,3 +132,5 @@ def cli(csvfile, check, config):
                     convertor.print_transaction(date, description, debit, credit)
             else:
                 convertor.print_transaction(date, description, debit, credit)
+        if total:
+            convertor.print_total(total_credit, total_debit)

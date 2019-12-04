@@ -34,7 +34,9 @@ class Config:
     def parse_config(self):
         """ Reads the config file and imports settings. """
         with open(self.config_file) as config:
-            self.accounts = json.load(config)
+            data = json.load(config)
+            self.accounts = data["accounts"]
+            self.filter = data["filter"]
 
     def create_dir(self):
         """ Creates defaults directory if it doesn't exist. """
