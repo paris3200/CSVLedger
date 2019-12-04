@@ -1,5 +1,6 @@
 import csv
 import re
+import datetime
 
 import click
 
@@ -24,7 +25,6 @@ def filter_description(row):
         "DOBSON",
         "MOCKSVILLE",
         "LEXINGTON",
-        "OF",
     ]
     for text in remove_text:
         result = result.replace(text, "")
@@ -112,6 +112,7 @@ def categorize_transaction(description):
 
 
 def print_transaction(date, description, debit, credit):
+    """ Prints the transaction in ledger format. """
     if debit:
         print(f"{date} *  {description}")
         print(f"\t \t {categorize_transaction(description)} \t ${format(debit, '.2f')}")
@@ -123,9 +124,14 @@ def print_transaction(date, description, debit, credit):
 
 
 def print_total(total_credit, total_debit):
+    """ Prints the combined total of all credit and debit transactions. """
     print(f"Credit: +{format(total_credit, '.2f')}")
     print(f"Debit: -{format(total_debit, '.2f')}")
-    print(f"Change: {format(total_credit-total_debit, '.2f')}")
+
+
+def format_date(date):
+    """ Converts date to ledgers default format of '%Y/%m/%d' """
+    return datetime.datetime.strptime(date, "%m/%d/%Y").strftime("%Y/%m/%d")
 
 
 @click.command()
@@ -157,7 +163,8 @@ def csvledger(csvfile, check):
             credit = None
             debit = None
             description = filter_description(row[2])
-            date = row[0]
+
+            date = format_date(row[0])
 
             try:
                 credit = float(row[3])
@@ -174,7 +181,7 @@ def csvledger(csvfile, check):
                 total_debit += debit
 
             if check:
-                if categorize_transaction(description) == None:
+                if categorize_transaction(description) is None:
                     print_transaction(date, description, debit, credit)
             else:
                 print_transaction(date, description, debit, credit)
