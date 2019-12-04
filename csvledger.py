@@ -6,6 +6,7 @@ import click
 
 
 def filter_description(row):
+    """ Removes extra data from the transaction description"""
     result = row
     remove_text = [
         "Point of Sale",
@@ -32,6 +33,7 @@ def filter_description(row):
     # Remove the Transaction Date
     result = re.sub(r"\d\d[-]\d\d", "", result)
 
+    # Strip whitespace
     result = result.strip()
     return result
 
@@ -129,6 +131,7 @@ def print_total(total_credit, total_debit):
     print(f"Debit: -{format(total_debit, '.2f')}")
 
 
+# TODO allow for initial date format to be specified
 def format_date(date):
     """ Converts date to ledgers default format of '%Y/%m/%d' """
     return datetime.datetime.strptime(date, "%m/%d/%Y").strftime("%Y/%m/%d")
@@ -148,7 +151,7 @@ def format_date(date):
 )
 def csvledger(csvfile, check):
     """ This script coverts CSV files downloaded from a financial instution to
-    ledger entires.  Each entry is categorized using the business name to
+    ledger entries.  Each entry is categorized using the business name to
     determine the spending category. """
     # Open file
     with open(csvfile, "r", newline="") as csv_file:
@@ -182,6 +185,7 @@ def csvledger(csvfile, check):
 
             if check:
                 if categorize_transaction(description) is None:
+                    # No assocated Income/Expense category found
                     print_transaction(date, description, debit, credit)
             else:
                 print_transaction(date, description, debit, credit)
