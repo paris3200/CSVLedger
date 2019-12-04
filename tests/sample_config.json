@@ -35,6 +35,9 @@
             "Expenses:Household:Home Improvements": [
                 "THE HOME DEPOT",
                 "LOWES HOME"
+            ],
+            "Income": [
+                "PAY CHECK"
             ]
         }
     ],
