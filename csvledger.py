@@ -1,12 +1,17 @@
 import csv
 import re
 import datetime
-import json
+import os
+import pprint
 
 import click
+from config import Config
 
 
 class CSVledger:
+    def __init__(self, config_file=None):
+        self.config = Config(config_file)
+
     def filter_description(self, row):
         """ Removes extra data from the transaction description"""
         result = row
@@ -39,100 +44,15 @@ class CSVledger:
         result = result.strip()
         return result
 
+    """
+    Matches the transaction description from the accounts and vendors listed in
+    the config file.  
+
+    :param description: transaction descrption
+    """
+
     def categorize_transaction(self, description):
-
-        # TODO Read accounts from config
-        accounts = {}
-
-        accounts["Assets:Savings"] = ["0060387673"]
-
-        accounts["Expenses:Auto:Gas"] = [
-            "EXXONMOBIL",
-            "FOUR BRO",
-            "SHEETZ",
-            "SHELL OIL",
-        ]
-
-        accounts["Expenses:Food:Grocery"] = [
-            "LOWE'S FOODS",
-            "ALDI",
-            "LIDL",
-            "SAMSCLUB",
-            "WAL-MART",
-            "WM SUPERCENTER",
-            "WM SUPERC",
-            "MEAT CENTE",
-            "TRIAD MUNICIPAL AB",
-        ]
-
-        accounts["Expenses:Food:Dining"] = [
-            "BOJANGLES",
-            "CHICK-FIL-A",
-            "DAIRI-O",
-            "EARLS",
-            "EL SARAPE MEXICAN",
-            "MCDONALD's",
-            "PIZZA PERFECT",
-            "PLAZA DEL SOL",
-            "RIO GRANDE",
-            "STARBUCKS",
-            "WENDYS",
-            "THE MASON JAR",
-            "WISEMAN BREWING",
-            "THIRSTY SOULS BREW",
-        ]
-
-        accounts["Expenses:Food:School Lunches"] = ["K12*STOKESCOUNTY"]
-
-        accounts["Expenses:Homestead:Chickens"] = ["LTD"]
-
-        accounts["Expenses:Household"] = [
-            "DOLLAR GENERAL",
-            "AMAZON com",
-            "AMZN",
-        ]
-
-        accounts["Expenses:Household:Home Improvements"] = [
-            "THE HOME DEPOT",
-            "LOWES HOME",
-        ]
-
-        accounts["Expenses:Insurance:Life"] = ["CINTI LIF INS"]
-        accounts["Expenses:Insurance:Auto"] = ["PENN NATIONAL IN AUTO"]
-        accounts["Expenses:Entertainment"] = [
-            "Prime Video",
-            "AMZN Digital",
-        ]
-
-        accounts["Expenses:Utilites:Power"] = ["DUKEENERGY"]
-        accounts["Expenses:Utilites:Internet"] = ["SPECTRUM", "TIMEWARNER"]
-        accounts["Expenses:Personal Care:Doctor"] = [
-            "STEPHEN W",
-            "HUGH CHATHAM WOMENELKIN",
-        ]
-        accounts["Expenses:Personal Care:Medicine"] = ["CVS/PHARM"]
-
-        accounts["Liabilites:Wells Fargo"] = ["WELLSFARGO"]
-        accounts["Liabilites:SECU:Mortgage"] = ["6038767390"]
-        accounts["Liabilites:SECU:Van"] = ["6038767305"]
-        accounts["Liabilites:SECU:Visa"] = ["4046571218010930"]
-
-        accounts["Income:Dakota:Salary"] = ["STATE OF NC", "Deposit USDA"]
-        accounts["Income:Dakota:Dispatch"] = ["Deposit CAS5 TREAS"]
-        accounts["Income:Misc"] = ["SECU Foundation", "Member Deposit"]
-        accounts["Income:Interest"] = ["Dividend Earned"]
-
-        accounts["Expenses:Checks"] = ["INCLEARING CHECK"]
-        accounts["Assets:Cash"] = ["ATM Cash Withdrawal"]
-        accounts["Expenses:Misc"] = ["VENMO"]
-        accounts["Expenses:FEES"] = ["Overdraft Trnsfr Fee", "Safe Deposit Box Fee"]
-        accounts["Expenses:Homestead"] = ["JACKS SMALL ENGINE"]
-        accounts["Expenses:Auto:Maintenance"] = ["OREILLY"]
-        accounts["Expenses:Personal Care:Clothes"] = ["TARGET"]
-        accounts["Expenses:Personal Care:Hair Cut"] = ["DON'S BARB"]
-        accounts["Expenses:Paris Leatherworks"] = ["019246000083916"]
-        accounts["Expenses:Auto"] = ["STRICKLAND BROTHER"]
-
+        accounts = self.config.accounts
         for account, vendors in accounts.items():
             for vendor in vendors:
                 if vendor in description:
@@ -143,13 +63,13 @@ class CSVledger:
         if debit:
             print(f"{date} *  {description}")
             print(
-                f"\t \t {categorize_transaction(description)} \t ${format(debit, '.2f')}"
+                f"\t \t {self.categorize_transaction(description)} \t ${format(debit, '.2f')}"
             )
             print("\t \t Assets:Checking \n")
         elif credit:
             print(f"{date} *  {description}")
             print(f"\t \t Assets:Checking \t ${format(credit, '.2f')}")
-            print(f"\t \t {categorize_transaction(description)} \n")
+            print(f"\t \t {self.categorize_transaction(description)} \n")
 
     def print_total(self, total_credit, total_debit):
         """ Prints the combined total of all credit and debit transactions. """
@@ -174,12 +94,15 @@ class CSVledger:
     is_flag=True,
     help="prints all transaction without an expense/income category.",
 )
-def cli(csvfile, check):
+@click.option(
+    "--config", type=click.Path(exists=True, readable=True), help="path to config file",
+)
+def cli(csvfile, check, config):
     """ This script coverts CSV files downloaded from a financial instution to
     ledger entries.  Each entry is categorized using the business name to
     determine the spending category. """
 
-    convertor = CSVledger()
+    convertor = CSVledger(config)
 
     # Open file
     with open(csvfile, "r", newline="") as csv_file:
