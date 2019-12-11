@@ -3,7 +3,7 @@ Test the CLI Interface
 """
 import os
 from click.testing import CliRunner
-from csvledger import cli
+from csvledger.csvledger import cli
 
 
 def test_entrypoint():

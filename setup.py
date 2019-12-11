@@ -10,6 +10,6 @@ setup(
     install_requires=["Click"],
     entry_points="""
         [console_scripts]
-        csvledger=csvledger:cli
+    csvledger=csvledger.csvledger:cli
     """,
 )

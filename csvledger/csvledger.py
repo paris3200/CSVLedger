@@ -4,7 +4,7 @@ import re
 
 import click
 
-from config import Config
+from csvledger.config import Config
 
 
 class CSVledger:
@@ -66,16 +66,12 @@ class CSVledger:
     # TODO allow for initial date format to be specified
     def format_date(self, date):
         """ Converts date to ledgers default format of '%Y/%m/%d' """
-        return datetime.datetime.strptime(date, "%m/%d/%Y").strftime(
-            "%Y/%m/%d"
-        )
+        return datetime.datetime.strptime(date, "%m/%d/%Y").strftime("%Y/%m/%d")
 
 
 @click.command()
 @click.option(
-    "--config",
-    type=click.Path(exists=True, readable=True),
-    help="path to config file",
+    "--config", type=click.Path(exists=True, readable=True), help="path to config file",
 )
 @click.option(
     "--csvfile",
@@ -89,9 +85,7 @@ class CSVledger:
     help="prints all transaction without an expense/income category.",
 )
 @click.option(
-    "--total",
-    is_flag=True,
-    help="prints sum of all credit and debit transactions",
+    "--total", is_flag=True, help="prints sum of all credit and debit transactions",
 )
 @click.option(
     "--convert", is_flag=True, help="prints transactions in ledger format",
@@ -136,9 +130,7 @@ def cli(csvfile, check, config, total, convert):
             if check:
                 if convertor.categorize_transaction(description) is None:
                     # No assocated Income/Expense category found
-                    convertor.print_transaction(
-                        date, description, debit, credit
-                    )
+                    convertor.print_transaction(date, description, debit, credit)
             elif convert:
                 convertor.print_transaction(date, description, debit, credit)
         if total:
