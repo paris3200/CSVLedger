@@ -1,4 +1,4 @@
-# CSVledger
+# CSVLedger
 Convert CSV fanancial transactions to ledger journal
 
 
@@ -36,7 +36,7 @@ environment, activate it, and follow the install directions below.
 
 To install CSVLedger begin by cloning the repo and changing to the directory. ::
 
-    git clone https://github.com/paris3200/csvledger.git
+    git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
 Install the requirements using Pip. ::
@@ -59,7 +59,7 @@ Jason Paris – paris3200@gmail.com
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/paris3200/github-link](https://github.com/dbader/)
+[https://github.com/paris3200/CSVLedger](https://github.com/paris3200/CSVLedger)
 
 ## Contributing
 
