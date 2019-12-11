@@ -50,6 +50,8 @@ Finally install CSVLedger. ::
 
 ## Release History
 
+* 0.1.1
+    * Restructed Project
 * 0.1.0
     * Work in progress
 
