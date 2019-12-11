@@ -2,7 +2,6 @@
 Test the CLI Interface
 """
 import os
-import pytest
 from click.testing import CliRunner
 from csvledger import cli
 

@@ -1,9 +1,7 @@
 """ Provides the configuration for the CSVledger module. """
-from configparser import ConfigParser
-import os
-import sys
 import errno
 import json
+import os
 
 
 class Config:
