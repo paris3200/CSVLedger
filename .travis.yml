@@ -4,6 +4,8 @@ python:
   - "3.7"
   - "3.8"
 
+sudo: enabled
+
 before_install:
   - python --version
   - pip install -U pip
