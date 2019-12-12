@@ -3,10 +3,6 @@ language: python
 python:
   - "3.8"
 
-sudo: enabled
-virtualenv:
-system_site_packages: true
-
 before_install:
   - python --version
   - pip install -U pip
