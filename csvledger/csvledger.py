@@ -4,7 +4,7 @@ import re
 
 import click
 
-from csvledger.config import Config
+from .config import Config
 
 
 class CSVledger:
