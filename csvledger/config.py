@@ -3,6 +3,8 @@ import errno
 import json
 import os
 
+import yaml
+
 
 class Config:
     """
@@ -31,8 +33,9 @@ class Config:
 
     def parse_config(self):
         """ Reads the config file and imports settings. """
+
         with open(self.config_file) as config:
-            data = json.load(config)
+            data = yaml.load(config, Loader=yaml.FullLoader)
             self.accounts = data["accounts"]
             self.filter = data["filter"]
 

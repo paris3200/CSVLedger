@@ -21,7 +21,7 @@ def test_sample_returns_unmatched_transaction():
         cli,
         [
             "--config",
-            "tests/sample_config.json",
+            "tests/sample_config.yml",
             "-i",
             "tests/sample_transactions.csv",
             "--check",
@@ -39,7 +39,7 @@ def test_totals():
         cli,
         [
             "--config",
-            "tests/sample_config.json",
+            "tests/sample_config.yml",
             "-i",
             "tests/sample_transactions.csv",
             "--total",
@@ -59,7 +59,7 @@ def test_conversion():
         cli,
         [
             "--config",
-            "tests/sample_config.json",
+            "tests/sample_config.yml",
             "-i",
             "tests/sample_transactions.csv",
             "--convert",
