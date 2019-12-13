@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger)
+
 # CSVLedger
 Convert CSV fanancial transactions to ledger journal
 
@@ -39,17 +41,19 @@ To install CSVLedger begin by cloning the repo and changing to the directory. ::
     git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
-Install the requirements using Pip. ::
+Install the requirements using Pip.
 
     pip install -r requirements-dev.txt
 
-Finally install CSVLedger. ::
+Finally install CSVLedger.
 
     python setup.py install
 
 
 ## Release History
 
+* 0.2.0
+    * Added support for YAML config
 * 0.1.2
     * Travis CI added
 * 0.1.1
