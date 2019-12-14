@@ -8,8 +8,7 @@ import yaml
 
 class Config:
     """
-    Reads the default configuration from config file.  If file doesn't exist
-    then it is created.
+    Reads the configuration from config file.
 
     :param config_file: Location of config file
     """

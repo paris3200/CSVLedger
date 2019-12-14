@@ -11,9 +11,14 @@ class CSVledger:
     def __init__(self, config_file=None):
         self.config = Config(config_file)
 
-    def filter_description(self, row):
-        """ Removes extra data from the transaction description"""
-        result = row
+    def filter_description(self, description):
+        """ Deletes extra data from the transaction description which is listed
+        in the config file under filter.
+
+        :param description:  the description to be filtered
+        :returns: the filtered string
+        """
+        result = description
         for text in self.config.filter:
             result = result.replace(text, "")
 
@@ -30,7 +35,7 @@ class CSVledger:
         Matches the transaction description from the accounts and vendors
         listed in the config file.
 
-        :param description: transaction descrption
+        :param description: transaction description
         """
         accounts = self.config.accounts
         for group in accounts:
@@ -39,19 +44,27 @@ class CSVledger:
                     if vendor in description:
                         return account
 
-    def print_transaction(self, date, description, debit, credit):
-        """ Prints the transaction in ledger format. """
+    # TODO Return a formatted string instead of printing
+    def print_transaction(self, date, payee, debit=0, credit=0):
+        """ Prints the transaction in ledger format.
+        Prints a formated ledger transaction.
+
+        :param date: data of transactions
+        :Param description: payee of transaction
+        :param debit: debit amount of transaction
+        :param credit: credit amount of transaction
+        """
         if debit:
-            print(f"{date} * {description}")
+            print(f"{date} * {payee}")
             print(
-                f"\t \t {self.categorize_transaction(description)} \t \
+                f"\t \t {self.categorize_transaction(payee)} \t \
                 ${format(debit, '.2f')}"
             )
             print("\t \t Assets:Checking \n")
         elif credit:
-            print(f"{date} * {description}")
+            print(f"{date} * {payee}")
             print(f"\t \t Assets:Checking \t ${format(credit, '.2f')}")
-            print(f"\t \t {self.categorize_transaction(description)} \n")
+            print(f"\t \t {self.categorize_transaction(payee)} \n")
 
     def print_total(self, total_credit, total_debit):
         """
