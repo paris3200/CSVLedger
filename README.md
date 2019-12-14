@@ -10,12 +10,11 @@ production use.  However, if you're ok with editing some Python code to set
 some account variables it will work.
 
 ```
- csvledger --help
+csvledger --help
 Usage: csvledger [OPTIONS]
-
-  This script coverts CSV files downloaded from a financial instution to
-  ledger entries.  Each entry is categorized using the business name to
-  determine the spending category.
+    CSVledger taks the input of a CSV file of financial transactions, strips excessive
+    data from the transactions and then converts the transactions to ledger-cli
+    format.
 
 Options:
   --config PATH       path to config file
