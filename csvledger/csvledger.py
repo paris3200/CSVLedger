@@ -8,11 +8,18 @@ from .config import Config
 
 
 class CSVledger:
+    """
+    CSVledger taks the input of a CSV file of financial transactions, strips excessive
+    data from the transactions and then converts the transactions to ledger-cli
+    format.
+    """
+
     def __init__(self, config_file=None):
         self.config = Config(config_file)
 
     def filter_description(self, description):
-        """ Deletes extra data from the transaction description which is listed
+        """
+        Deletes extra data from the transaction description which is listed
         in the config file under filter.
 
         :param description:  the description to be filtered
@@ -36,6 +43,7 @@ class CSVledger:
         listed in the config file.
 
         :param description: transaction description
+        :returns: account associated with payee
         """
         accounts = self.config.accounts
         for group in accounts:
@@ -46,8 +54,8 @@ class CSVledger:
 
     # TODO Return a formatted string instead of printing
     def print_transaction(self, date, payee, debit=0, credit=0):
-        """ Prints the transaction in ledger format.
-        Prints a formated ledger transaction.
+        """
+        Prints the transaction in ledger format
 
         :param date: data of transactions
         :Param description: payee of transaction
@@ -77,7 +85,8 @@ class CSVledger:
         print(f"Debit: -${format(total_debit, '.2f')}")
 
     # TODO allow for initial date format to be specified
-    def format_date(self, date):
+    @staticmethod
+    def format_date(date):
         """ Converts date to ledgers default format of '%Y/%m/%d' """
         return datetime.datetime.strptime(date, "%m/%d/%Y").strftime("%Y/%m/%d")
 
@@ -104,9 +113,11 @@ class CSVledger:
     "--convert", is_flag=True, help="prints transactions in ledger format",
 )
 def cli(csvfile, check, config, total, convert):
-    """ This script coverts CSV files downloaded from a financial instution to
-    ledger entries.  Each entry is categorized using the business name to
-    determine the spending category. """
+    """
+    CSVledger taks the input of a CSV file of financial transactions, strips excessive
+    data from the transactions and then converts the transactions to ledger-cli
+    format.
+    """
 
     convertor = CSVledger(config)
 
