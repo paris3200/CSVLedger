@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger)[![Coverage Status](https://coveralls.io/repos/github/paris3200/CSVLedger/badge.svg?branch=master)](https://coveralls.io/github/paris3200/CSVLedger?branch=master)
+[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger)[![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger)
 
 # CSVLedger
 Convert CSV fanancial transactions to ledger journal
