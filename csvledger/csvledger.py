@@ -16,10 +16,58 @@ class CSVledger:
 
     def __init__(self, config_file=None):
         self.config = Config(config_file)
+        self.credit = 0
+        self.debit = 0
+
+    def convert_file(self, csvfile=None, header=True, check=False):
+        """
+        :param csvfile: file path of csv file to processed
+        :param header: Boolean - true if file contains a header row
+        :param check: Boolean - check for unmatched transactions
+        :return converted transactions
+        """
+        result = ""
+        with open(csvfile, "r", newline="") as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=",")
+
+            if header:
+                next(csv_reader)
+
+            for row in csv_reader:
+                credit = None
+                debit = None
+                description = self.filter_description(row[2])
+
+                date = self.format_date(row[0])
+
+                try:
+                    credit = float(row[3])
+                except ValueError:
+                    pass
+                else:
+                    self.credit += credit
+
+                try:
+                    debit = float(row[4])
+                except ValueError:
+                    pass
+                else:
+                    self.debit += debit
+
+                if check:
+                    if self.categorize_transaction(description) is None:
+                        # No assocated Income/Expense category found
+                        result += self.format_transaction(
+                            date, description, debit, credit
+                        )
+                else:
+                    result += self.format_transaction(date, description, debit, credit)
+
+            return result
 
     def filter_description(self, description):
         """
-        Deletes extra data from the transaction description which is listed
+        Delete extra data from the transaction description which is listed
         in the config file under filter.
 
         :param description:  the description to be filtered
@@ -52,37 +100,15 @@ class CSVledger:
                     if vendor in description:
                         return account
 
-    # TODO Return a formatted string instead of printing
-    def print_transaction(self, date, payee, debit=0, credit=0):
-        """
-        Prints the transaction in ledger format
-
-        :param date: data of transactions
-        :Param description: payee of transaction
-        :param debit: debit amount of transaction
-        :param credit: credit amount of transaction
-        """
-        if debit:
-            print(f"{date} * {payee}")
-            print(
-                f"\t \t {self.categorize_transaction(payee)} \t \
-                ${format(debit, '.2f')}"
-            )
-            print("\t \t Assets:Checking \n")
-        elif credit:
-            print(f"{date} * {payee}")
-            print(f"\t \t Assets:Checking \t ${format(credit, '.2f')}")
-            print(f"\t \t {self.categorize_transaction(payee)} \n")
-
     def format_transaction(self, date, payee, debit=0, credit=0):
         """
-        Formats the transaction in ledger format
+        Returns a formatted string of the financial transaction.
 
         :param date: data of transactions
         :Param description: payee of transaction
         :param debit: debit amount of transaction
         :param credit: credit amount of transaction
-        :returns: string of the formateed transaction
+        :returns: string of the formated transaction
         """
         result = f"{date} * {payee} \n"
         if debit:
@@ -93,15 +119,14 @@ class CSVledger:
             result += f"\t \t {self.categorize_transaction(payee)} \n"
         return result.strip()
 
-    def print_total(self, total_credit, total_debit):
+    def get_totals(self):
         """
-        Prints the combined total of all credit and debit transactions
-
-        :param total_credit: sum total of credit transactions
-        :param total_debit: sum total of debit transactions
+        Returns the combined total of all credit and debit transactions
+        :returns: string formatted with summed total of all transactions
         """
-        print(f"Credit: +${format(total_credit, '.2f')}")
-        print(f"Debit: -${format(total_debit, '.2f')}")
+        result = f"Credit: +${format(self.credit, '.2f')} \n"
+        result += f"Debit: -${format(self.debit, '.2f')} \n"
+        return result
 
     # TODO allow for initial date format to be specified
     @staticmethod

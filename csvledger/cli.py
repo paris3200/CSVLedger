@@ -33,41 +33,8 @@ def cli(csvfile, check, config, total, convert):
 
     convertor = CSVledger(config)
 
-    # Open file
-    with open(csvfile, "r", newline="") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=",")
-        total_credit = 0
-        total_debit = 0
-
-        # Skip Header Row
-        next(csv_reader)
-
-        for row in csv_reader:
-            credit = None
-            debit = None
-            description = convertor.filter_description(row[2])
-
-            date = convertor.format_date(row[0])
-
-            try:
-                credit = float(row[3])
-            except ValueError:
-                pass
-            else:
-                total_credit += credit
-
-            try:
-                debit = float(row[4])
-            except ValueError:
-                pass
-            else:
-                total_debit += debit
-
-            if check:
-                if convertor.categorize_transaction(description) is None:
-                    # No assocated Income/Expense category found
-                    convertor.print_transaction(date, description, debit, credit)
-            elif convert:
-                convertor.print_transaction(date, description, debit, credit)
-        if total:
-            convertor.print_total(total_credit, total_debit)
+    if total:
+        convertor.convert_file(csvfile)
+        print(convertor.get_totals())
+    else:
+        print(convertor.convert_file(csvfile))
