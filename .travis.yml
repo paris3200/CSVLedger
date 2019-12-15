@@ -7,6 +7,7 @@ before_install:
   - python --version
   - pip install -U pip
   - pip install -U pytest
+  - pip install -U pytest-cov
   - pip install -U codecov
 
 # command to install dependencies
@@ -15,6 +16,6 @@ install:
   - pip install .
 # command to run tests
 script:
-  - pytest
+  - pytest --cov=./
 after_success:
   - codecov
