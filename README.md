@@ -51,6 +51,8 @@ Finally install CSVLedger.
 
 ## Release History
 
+* 0.3.0
+    * Minor refactoring
 * 0.2.0
     * Added support for YAML config
 * 0.1.2

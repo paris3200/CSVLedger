@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="csvledger",
-    version="0.2",
+    version="0.3",
     author="Jason Paris",
     author_email="paris3200@gmail.com",
     description="convert csv to ledgercli format",
