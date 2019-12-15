@@ -4,16 +4,16 @@ Test the CLI Interface
 import os
 from click.testing import CliRunner
 from csvledger.cli import cli
+import pytest
 
 
+@pytest.mark.skip(reason="Unknown failure on Travis CI only")
 def test_entrypoint():
     """
     Is entrypoint script installed? (setup.py)
     """
-    pass
-    # exit_status = os.system("csvledger --help")
-    # Fails on Travis CI for reasons unknown.
-    # assert exit_status == 0
+    exit_status = os.system("csvledger --help")
+    assert exit_status == 0
 
 
 def test_sample_returns_unmatched_transaction():
