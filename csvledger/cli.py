@@ -7,6 +7,7 @@ import click
 @click.option(
     "--config", type=click.Path(exists=True, readable=True), help="path to config file",
 )
+@click.option("--profile", default="default", help="profile settings to use")
 @click.option(
     "--csvfile",
     "-i",
@@ -24,14 +25,14 @@ import click
 @click.option(
     "--convert", is_flag=True, help="prints transactions in ledger format",
 )
-def cli(csvfile, check, config, total, convert):
+def cli(csvfile, check, config, total, convert, profile):
     """
     CSVledger taks the input of a CSV file of financial transactions, strips excessive
     data from the transactions and then converts the transactions to ledger-cli
     format.
     """
 
-    convertor = CSVledger(config)
+    convertor = CSVledger(config, profile)
 
     if total:
         convertor.convert_file(csvfile)

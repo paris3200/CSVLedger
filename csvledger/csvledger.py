@@ -14,15 +14,14 @@ class CSVledger:
     format.
     """
 
-    def __init__(self, config_file=None):
-        self.config = Config(config_file)
+    def __init__(self, config_file=None, profile=None):
+        self.config = Config(config_file, profile)
         self.credit = 0
         self.debit = 0
 
-    def convert_file(self, csvfile=None, header=True, check=False):
+    def convert_file(self, csvfile=None, check=False):
         """
         :param csvfile: file path of csv file to processed
-        :param header: Boolean - true if file contains a header row
         :param check: Boolean - check for unmatched transactions
         :return converted transactions
         """
@@ -30,25 +29,27 @@ class CSVledger:
         with open(csvfile, "r", newline="") as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=",")
 
-            if header:
+            if self.config.profile["header"]:
                 next(csv_reader)
 
             for row in csv_reader:
                 credit = None
                 debit = None
-                description = self.filter_description(row[2])
+                description = self.filter_description(
+                    row[self.config.profile["description"]]
+                )
 
-                date = self.format_date(row[0])
+                date = self.format_date(row[self.config.profile["date"]])
 
                 try:
-                    credit = float(row[3])
+                    credit = float(row[self.config.profile["credit"]])
                 except ValueError:
                     pass
                 else:
                     self.credit += credit
 
                 try:
-                    debit = float(row[4])
+                    debit = float(row[self.config.profile["debit"]])
                 except ValueError:
                     pass
                 else:

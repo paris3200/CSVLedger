@@ -10,10 +10,11 @@ class Config:
     """
     Reads the configuration from config file.
 
-    :param config_file: Location of config file
+    :param config_file: file path of config file
+    :param profile: profile to be used for conversion
     """
 
-    def __init__(self, config_file=None):
+    def __init__(self, config_file=None, profile="default"):
 
         xdg_config = os.environ.get("XDG_CONFIG_HOME")
 
@@ -28,12 +29,15 @@ class Config:
         if not os.path.isfile(self.config_file):
             raise Exception("Config file not found")
 
-        self.parse_config()
+        self.parse_config(profile)
 
-    def parse_config(self):
+    def parse_config(self, profile):
         """ Reads the config file and imports settings. """
 
         with open(self.config_file) as config:
             data = yaml.load(config, Loader=yaml.FullLoader)
             self.accounts = data["accounts"]
             self.filter = data["filter"]
+            # TODO Catch NameError
+            if profile:
+                self.profile = data["profile"][profile]

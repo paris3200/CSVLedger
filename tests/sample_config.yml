@@ -1,4 +1,12 @@
 ---
+profile:
+    default:
+        header: true
+        # Column number counting starts with 0
+        date: 0
+        description: 2
+        credit: 3
+        debit: 4
 accounts:
 - Assets:Cash:
   - ATM Cash Withdrawal
