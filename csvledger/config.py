@@ -37,14 +37,3 @@ class Config:
             data = yaml.load(config, Loader=yaml.FullLoader)
             self.accounts = data["accounts"]
             self.filter = data["filter"]
-
-    def create_dir(self):
-        """ Creates defaults directory if it doesn't exist. """
-        directory = os.path.expanduser(os.path.dirname(self.config_file))
-        try:
-            os.makedirs(directory)
-        except OSError as exc:
-            if exc.errno == errno.EEXIST and os.path.isdir(directory):
-                pass
-            else:
-                raise
