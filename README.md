@@ -1,13 +1,12 @@
 [![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger) [![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger)
 
 # CSVLedger
-Convert CSV fanancial transactions to ledger journal
+Convert CSV financial transactions to ledger journal
 
 
-CSVLedger converts a CVS file downloaded from a fanancial instution into a
+CSVLedger converts a CVS file downloaded from a financial institution into a
 ledgercli journal file.  Currently it is under development and not ready for
-production use.  However, if you're ok with editing some Python code to set
-some account variables it will work.
+production use.
 
 ```
 csvledger --help
