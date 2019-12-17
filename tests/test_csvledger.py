@@ -11,14 +11,12 @@ def test_filter_description():
 def test_format_debit_transaction():
     convertor = CSVledger("tests/sample_config.yml")
     result = convertor.format_transaction("date", "BP", debit=20.00)
-    formatted = (
-        "date * BP \n \t \t Expenses:Auto:Gas \t $20.00 \n \t \t Assets:Checking \n"
-    )
-    assert result == formatted.strip()
+    formatted = "date * BP\n\t\tExpenses:Auto:Gas\t$20.00\n\t\tAssets:Checking\n\n"
+    assert result == formatted
 
 
 def test_format_credit_transaction():
     convertor = CSVledger("tests/sample_config.yml")
     result = convertor.format_transaction("date", "PAY CHECK", credit=20.00)
-    formatted = "date * PAY CHECK \n \t \t Assets:Checking \t $20.00 \n \t \t Income \n"
-    assert result == formatted.strip()
+    formatted = "date * PAY CHECK\n\t\tAssets:Checking\t$20.00\n\t\tIncome\n\n"
+    assert result == formatted

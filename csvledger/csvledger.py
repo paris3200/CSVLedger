@@ -150,14 +150,16 @@ class CSVledger:
         str
             Formatted transaction
         """
-        result = f"{date} * {payee} \n"
+        result = f"{date} * {payee}\n"
         if debit:
-            result += f" \t \t {self.categorize_transaction(payee)} \t ${format(debit, '.2f')} \n "
-            result += "\t \t Assets:Checking \n"
+            result += (
+                f"\t\t{self.categorize_transaction(payee)}\t${format(debit, '.2f')}\n"
+            )
+            result += "\t\tAssets:Checking\n\n"
         elif credit:
-            result += f" \t \t Assets:Checking \t ${format(credit, '.2f')} \n "
-            result += f"\t \t {self.categorize_transaction(payee)} \n"
-        return result.strip()
+            result += f"\t\tAssets:Checking\t${format(credit, '.2f')}\n"
+            result += f"\t\t{self.categorize_transaction(payee)}\n\n"
+        return result
 
     def get_totals(self):
         """

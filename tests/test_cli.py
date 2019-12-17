@@ -68,7 +68,5 @@ def test_conversion():
         ],
     )
     assert result.exit_code == 0
-    formatted = (
-        "2019/08/26 * PAY CHECK \n \t \t Assets:Checking \t $1200.00 \n \t \t Income \n"
-    )
-    assert formatted.strip() in result.output
+    formatted = "2019/08/26 * PAY CHECK\n\t\tAssets:Checking\t$1200.00\n\t\tIncome\n"
+    assert formatted in result.output
