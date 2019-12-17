@@ -53,7 +53,7 @@ prevent conflicts with other python packages.  First create the virtual
 environment, activate it, and follow the install directions below.
 
 To install CSVLedger begin by cloning the repo and changing to the directory.
-::
+
     git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
