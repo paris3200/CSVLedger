@@ -5,7 +5,6 @@ Convert CSV financial transactions to ledger journal
 
 Turn this:
 
-::
     Process Dates,Check Number,Description,Credit Amount,Debit Amount
     8/5/2019,,Point of Sale Debit  DATE 08-03 CHICK-FIL-A,,13.28
     8/5/2019,,Point of Sale Debit  DATE 08-03 WAL-MART,,69.98
@@ -13,7 +12,6 @@ Turn this:
 
 Into:
 
-::
     2019/08/05 * CHICK-FIL-A
 		Expenses:Food:Dining	$13.28
 		Assets:Checking
