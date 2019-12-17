@@ -12,6 +12,11 @@ class CSVledger:
     CSVledger taks the input of a CSV file of financial transactions, strips excessive
     data from the transactions and then converts the transactions to ledger-cli
     format.
+
+    Parameters
+    ----------
+    config_file: str
+        File path of config file.
     """
 
     def __init__(self, config_file=None, profile=None):
@@ -21,9 +26,17 @@ class CSVledger:
 
     def convert_file(self, csvfile=None, check=False):
         """
-        :param csvfile: file path of csv file to processed
-        :param check: Boolean - check for unmatched transactions
-        :return converted transactions
+        Parameters
+        ----------
+        csvfile: str
+            File path of csv file to processed.
+        check: Boolean
+            Check for unmatched transactions.
+
+        Returns
+        -------
+        str
+            converted transactions
         """
         result = ""
         with open(csvfile, "r", newline="") as csv_file:
@@ -71,8 +84,15 @@ class CSVledger:
         Delete extra data from the transaction description which is listed
         in the config file under filter.
 
-        :param description:  the description to be filtered
-        :returns: the filtered string
+        Parameters
+        ----------
+        description: str
+            The description to be filtered
+
+        Returns
+        -------
+        str
+            The filtered description.
         """
         result = description
         for text in self.config.filter:
@@ -91,8 +111,15 @@ class CSVledger:
         Matches the transaction description from the accounts and vendors
         listed in the config file.
 
-        :param description: transaction description
-        :returns: account associated with payee
+        Parameters
+        -----------
+        description: str
+                Transaction description
+
+        Returns
+        --------
+        str or None
+            Account Category associated with description if found.
         """
         accounts = self.config.accounts
         for group in accounts:
@@ -103,13 +130,25 @@ class CSVledger:
 
     def format_transaction(self, date, payee, debit=0, credit=0):
         """
-        Returns a formatted string of the financial transaction.
+        Formats transaction into the ledger format.
 
-        :param date: data of transactions
-        :Param description: payee of transaction
-        :param debit: debit amount of transaction
-        :param credit: credit amount of transaction
-        :returns: string of the formated transaction
+
+        Parameters
+        -----------
+        date: str
+            date of transactions
+        description: str
+            payee of transaction
+        debit: float
+            debit amount of transaction
+        credit: float
+            credit amount of transaction
+
+
+        Returns
+        --------
+        str
+            Formatted transaction
         """
         result = f"{date} * {payee} \n"
         if debit:
@@ -122,8 +161,12 @@ class CSVledger:
 
     def get_totals(self):
         """
-        Returns the combined total of all credit and debit transactions
-        :returns: string formatted with summed total of all transactions
+        Returns the combined total of all credit and debit transactions.
+
+        Returns
+        -----------
+        str
+            formatted with summed total of all transactions
         """
         result = f"Credit: +${format(self.credit, '.2f')} \n"
         result += f"Debit: -${format(self.debit, '.2f')} \n"
@@ -132,5 +175,18 @@ class CSVledger:
     # TODO allow for initial date format to be specified
     @staticmethod
     def format_date(date):
-        """ Converts date to ledgers default format of '%Y/%m/%d' """
+        """
+        Converts date from %m/%d/%Y to ledgers default format of '%Y/%m/%d'
+
+        Parameters
+        --------
+        date: str
+            Date in %m/%d/%Y (12/15/2019)
+
+        Returns
+        -------
+        str
+            Date formated to '%Y/%m/%d' (2019/12/15)
+        """
+
         return datetime.datetime.strptime(date, "%m/%d/%Y").strftime("%Y/%m/%d")

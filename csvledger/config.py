@@ -10,8 +10,12 @@ class Config:
     """
     Reads the configuration from config file.
 
-    :param config_file: file path of config file
-    :param profile: profile to be used for conversion
+    Parameters
+    ----------
+    config_file: str
+        File path of config file.
+    profile: str
+        Profile name from config file to be used
     """
 
     def __init__(self, config_file=None, profile="default"):
@@ -32,7 +36,14 @@ class Config:
         self.parse_config(profile)
 
     def parse_config(self, profile):
-        """ Reads the config file and imports settings. """
+        """
+        Reads the config file and imports settings.
+
+        Parameters
+        ----------
+        profile: str
+            Profile name from config file to be used
+        """
 
         with open(self.config_file) as config:
             data = yaml.load(config, Loader=yaml.FullLoader)
