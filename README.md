@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger) [![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger)
+[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger) [![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger) [![Documentation Status](https://readthedocs.org/projects/csvledger/badge/?version=latest)](https://csvledger.readthedocs.io/en/latest/?badge=latest)
+
 
 # CSVLedger
 Convert CSV financial transactions to ledger journal
