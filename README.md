@@ -3,10 +3,29 @@
 # CSVLedger
 Convert CSV financial transactions to ledger journal
 
+Turn this:
 
-CSVLedger converts a CVS file downloaded from a financial institution into a
-ledgercli journal file.  Currently it is under development and not ready for
-production use.
+::
+    Process Dates,Check Number,Description,Credit Amount,Debit Amount
+    8/5/2019,,Point of Sale Debit  DATE 08-03 CHICK-FIL-A,,13.28
+    8/5/2019,,Point of Sale Debit  DATE 08-03 WAL-MART,,69.98
+    8/5/2019,,Point of Sale Debit  DATE 08-03 LIDL,,107.91
+
+Into:
+
+::
+    2019/08/05 * CHICK-FIL-A
+		Expenses:Food:Dining	$13.28
+		Assets:Checking
+
+    2019/08/05 * WAL-MART
+		Expenses:Food:Grocery	$69.98
+		Assets:Checking
+
+    2019/08/05 * LIDL
+		Expenses:Food:Grocery	$107.91
+		Assets:Checking
+
 
 ```
 csvledger --help
@@ -34,8 +53,8 @@ It is recommended that you install CSVLedger in a virtual environment to
 prevent conflicts with other python packages.  First create the virtual
 environment, activate it, and follow the install directions below.
 
-To install CSVLedger begin by cloning the repo and changing to the directory. ::
-
+To install CSVLedger begin by cloning the repo and changing to the directory.
+::
     git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
