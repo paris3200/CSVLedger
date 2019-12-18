@@ -24,9 +24,9 @@ class Config:
 
         if not config_file:
             if not xdg_config:
-                config_file = "~/.config/csvledger/config"
+                config_file = "~/.config/csvledger/config.yml"
             else:
-                config_file = xdg_config + "/csvledger/config"
+                config_file = xdg_config + "/csvledger/config.yml"
 
         # Get the absolute file path
         self.config_file = os.path.expanduser(config_file)
