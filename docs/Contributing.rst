@@ -1,0 +1,4 @@
+Contributing
+============
+
+:ref:`modindex`
