@@ -72,6 +72,26 @@ sample file, the result config would be:
     filter:
 
 
+The final section of the profile is the account name.  This is the account that
+is funds are deducted from for expense transactions.  In our example, we will
+be using `Assets:Checking`.  Therefore our complete profile section of the
+config will be:
+
+.. code-block:: YAML
+
+    profile:
+       default:
+           # Set to true if file contains a header row.
+           header: true
+           # Column number counting starts with 0
+           date: 0
+           description: 2
+           credit: 3
+           debit: 4
+           account: "Assets:Checking"
+    accounts:
+    filter:
+
 Accounts
 ~~~~~~~~
 
