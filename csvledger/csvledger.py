@@ -2,8 +2,6 @@ import csv
 import datetime
 import re
 
-import click
-
 from .config import Config
 
 
@@ -19,7 +17,7 @@ class CSVledger:
         File path of config file.
     """
 
-    def __init__(self, config_file=None, profile=None):
+    def __init__(self, config_file=None, profile="default"):
         self.config = Config(config_file, profile)
         self.credit = 0
         self.debit = 0
@@ -155,9 +153,11 @@ class CSVledger:
             result += (
                 f"\t\t{self.categorize_transaction(payee)}\t${format(debit, '.2f')}\n"
             )
-            result += "\t\tAssets:Checking\n\n"
+            result += f"\t\t{self.config.profile['account']}\n\n"
         elif credit:
-            result += f"\t\tAssets:Checking\t${format(credit, '.2f')}\n"
+            result += (
+                f"\t\t{self.config.profile['account']}\t${format(credit, '.2f')}\n"
+            )
             result += f"\t\t{self.categorize_transaction(payee)}\n\n"
         return result
 

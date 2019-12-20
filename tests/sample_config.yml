@@ -7,6 +7,15 @@ profile:
         description: 2
         credit: 3
         debit: 4
+        account: "Assets:Checking"
+    visa:
+        header: true
+        # Column number counting starts with 0
+        date: 0
+        description: 2
+        credit: 3
+        debit: 4
+        account: "Liabilities:Visa"
 accounts:
 - Assets:Cash:
   - ATM Cash Withdrawal
