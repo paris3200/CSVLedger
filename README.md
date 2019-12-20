@@ -26,28 +26,9 @@ Into:
 		Assets:Checking
 
 
-```
 
 See [Quickstart Guide](https://csvledger.readthedocs.io/en/latest/Quickstart.html) to get started.
 
-
-csvledger --help
-Usage: csvledger [OPTIONS]
-
-  CSVledger taks the input of a CSV file of financial transactions, strips
-  excessive data from the transactions and then converts the transactions to
-  ledger-cli format.
-
-Options:
-  --config PATH       path to config file
-  --profile TEXT      profile settings to use
-  -i, --csvfile PATH  csv file to be converted
-  --check             prints all transaction without an expense/income
-                      category.
-  --total             prints sum of all credit and debit transactions
-  --convert           prints transactions in ledger format
-  --help              Show this message and exit.
-```
 
 ## Installation
 
