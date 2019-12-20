@@ -29,12 +29,14 @@ Into:
 ```
 csvledger --help
 Usage: csvledger [OPTIONS]
-    CSVledger taks the input of a CSV file of financial transactions, strips excessive
-    data from the transactions and then converts the transactions to ledger-cli
-    format.
+
+  CSVledger taks the input of a CSV file of financial transactions, strips
+  excessive data from the transactions and then converts the transactions to
+  ledger-cli format.
 
 Options:
   --config PATH       path to config file
+  --profile TEXT      profile settings to use
   -i, --csvfile PATH  csv file to be converted
   --check             prints all transaction without an expense/income
                       category.
