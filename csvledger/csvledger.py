@@ -93,15 +93,16 @@ class CSVledger:
             The filtered description.
         """
         result = description
-        for text in self.config.filter:
-            result = result.replace(text, "")
+        if self.config.filter:
+            for text in self.config.filter:
+                result = result.replace(text, "")
 
-        # TODO Move this to the config
-        # Remove the Transaction Date
-        result = re.sub(r"\d\d[-]\d\d", "", result)
+            # TODO Move this to the config
+            # Remove the Transaction Date
+            result = re.sub(r"\d\d[-]\d\d", "", result)
 
-        # Strip whitespace
-        result = result.strip()
+            # Strip whitespace
+            result = result.strip()
         return result
 
     def categorize_transaction(self, description):
