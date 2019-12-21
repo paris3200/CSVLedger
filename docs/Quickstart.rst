@@ -134,7 +134,9 @@ Filtering
 ~~~~~~~~~
 
 The third and final category in the config is filtering.  This is where you
-setup anything you want removed from the transaction description.
+setup anything you want removed from the transaction description.  There are
+two types of filtering options, simple and regex.  Simple filtering just
+removes any matching text.  Regex allows for more complicated filtering.
 
 .. code-block::
 
@@ -143,17 +145,32 @@ setup anything you want removed from the transaction description.
     8/5/2019,,Point of Sale Debit DATE 08-03 WAL-MART,,69.98
     8/5/2019,,Point of Sale Debit DATE 08-03 LIDL,,107.91
 
-Looking at our cvs file, it looks like we can filter out "Point of Sale",
+Looking at our cvs file, it looks like we can user simple filtering to filter out "Point of Sale",
 "Debit" and "DATE.
 
 
 .. code-block:: YAML
 
     filter:
-    - Point of Sale
-    - DATE
-    - Debit
+      simple:
+        - Point of Sale
+        - DATE
+        - Debit
 
+To remove the "08-03" we will need to use regular expressions.  In this case
+the regular expression will be  "\d\d[-]\d\d".  We will add this to the config
+under the "regex" heading.
+
+
+.. code-block:: YAML
+
+    filter:
+        simple:
+          - point of sale
+          - date
+          - debit
+        regex:
+          - \d\d[-]\d\d
 
 Putting it all together
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,9 +196,12 @@ The config file is now completed.  It should look like the following:
       - LIDL
       - WAL-MART
     filter:
-    - Point of Sale
-    - DATE
-    - Debit
+      simple:
+        - point of sale
+        - date
+        - debit
+      regex:
+         - \d\d[-]\d\d
 
 
 Running the config against the transactions file the ledger output is generated.
