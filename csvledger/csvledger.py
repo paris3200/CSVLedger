@@ -94,12 +94,17 @@ class CSVledger:
         """
         result = description
         if self.config.filter:
-            for text in self.config.filter:
-                result = result.replace(text, "")
+            try:
+                for text in self.config.filter["simple"]:
+                    result = result.replace(text, "")
+            except KeyError:
+                pass
 
-            # TODO Move this to the config
-            # Remove the Transaction Date
-            result = re.sub(r"\d\d[-]\d\d", "", result)
+            try:
+                for text in self.config.filter["regex"]:
+                    result = re.sub(text, "", result)
+            except KeyError:
+                pass
 
             # Strip whitespace
             result = result.strip()

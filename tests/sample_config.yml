@@ -47,7 +47,10 @@ accounts:
   Income:
   - PAY CHECK
 filter:
-- Point of Sale
-- DATE
-- Debit
-- ACH
+    simple:
+      - Point of Sale
+      - DATE
+      - Debit
+      - ACH
+    regex:
+      - \d\d[-]\d\d
