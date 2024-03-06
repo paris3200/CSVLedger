@@ -35,22 +35,17 @@ See [Quickstart Guide](https://csvledger.readthedocs.io/en/latest/Quickstart.htm
 
 ### Development setup
 
-It is recommended that you install CSVLedger in a virtual environment to
-prevent conflicts with other python packages.  First create the virtual
-environment, activate it, and follow the install directions below.
+To install CSVLedger begin by forking the repo.  Download the fork and switch to the directory.
 
-To install CSVLedger begin by cloning the repo and changing to the directory.
-
-    git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
-Install the requirements using Pip.
+Ensure that poetry is installed on your system.  Then run:
 
-    pip install -r requirements-dev.txt
+    poetry install --with=dev
 
-Finally install CSVLedger.
+Finally install the pre-commit hook.
 
-    python setup.py install
+    pre-commit install
 
 
 ## Release History
