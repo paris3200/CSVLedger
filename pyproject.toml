@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "csvledger"
+version = "0.1.0"
+description = "Convert CSV financial transactions to a ledger journal."
+authors = ["Jason Paris <paris3200@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.scripts]
+csvledger = "csvledger.cli:cli"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+PyYAML = "^6.0.1"
+click = "^8.1.7"
+
+[tool.poetry.group.dev.dependencies]
+mock = "^5.1.0"
+pytest = "^8.0.2"
+pre-commit = "^3.6.2"
+black = "^24.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
