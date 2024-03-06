@@ -50,6 +50,8 @@ Finally install the pre-commit hook.
 
 ## Release History
 
+* 0.3.1a
+    * Switch to poetry for dependency management.
 * 0.3.0
     * Minor refactoring
 * 0.2.0
