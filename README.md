@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/paris3200/CSVLedger.svg?branch=master)](https://travis-ci.org/paris3200/CSVLedger) [![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger) [![Documentation Status](https://readthedocs.org/projects/csvledger/badge/?version=latest)](https://csvledger.readthedocs.io/en/latest/?badge=latest)
+ [![codecov](https://codecov.io/gh/paris3200/CSVLedger/branch/master/graph/badge.svg)](https://codecov.io/gh/paris3200/CSVLedger) [![Documentation Status](https://readthedocs.org/projects/csvledger/badge/?version=latest)](https://csvledger.readthedocs.io/en/latest/?badge=latest)
 
 
 # CSVLedger
@@ -35,26 +35,23 @@ See [Quickstart Guide](https://csvledger.readthedocs.io/en/latest/Quickstart.htm
 
 ### Development setup
 
-It is recommended that you install CSVLedger in a virtual environment to
-prevent conflicts with other python packages.  First create the virtual
-environment, activate it, and follow the install directions below.
+To install CSVLedger begin by forking the repo.  Download the fork and switch to the directory.
 
-To install CSVLedger begin by cloning the repo and changing to the directory.
-
-    git clone https://github.com/paris3200/CSVLedger.git
     cd csvledger
 
-Install the requirements using Pip.
+Ensure that poetry is installed on your system.  Then run:
 
-    pip install -r requirements-dev.txt
+    poetry install --with=dev
 
-Finally install CSVLedger.
+Finally install the pre-commit hook.
 
-    python setup.py install
+    pre-commit install
 
 
 ## Release History
 
+* 0.3.1a
+    * Switch to poetry for dependency management.
 * 0.3.0
     * Minor refactoring
 * 0.2.0
